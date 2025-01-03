@@ -1,15 +1,25 @@
 {
-  "version": 2,
   "builds": [
     {
-      "src": "manage.py",
-      "use": "@vercel/python"
+      "src": "image/wsgi.py",  
+      "use": "@vercel/python",   
+      "config": {
+        "runtime": "python3.10"  
+      }
     }
   ],
   "routes": [
     {
-      "src": "/(.*)",
-      "dest": "manage.py"
+      "src": "/static/(.*)",  
+      "dest": "/static/$1"  
+    },
+    {
+      "src": "/media/(.*)",   
+      "dest": "/media/$1"  
+    },
+    {
+      "src": "/(.*)",         
+      "dest": "image/wsgi.py" 
     }
   ]
 }
