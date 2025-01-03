@@ -42,6 +42,7 @@ INSTALLED_APPS = [
 ]
 
 MIDDLEWARE = [
+    'whitenoise.middleware.WhiteNoiseMiddleware',
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
@@ -75,14 +76,25 @@ WSGI_APPLICATION = 'image.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/5.1/ref/settings/#databases
 
+# DATABASES = {
+#     'default': {
+#         'ENGINE': 'django.db.backends.postgresql',
+#         'NAME': 'image',
+#         'USER':'Captain',
+#         'PASSWORD':'Captain',
+# }}
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql',
-        'NAME': 'image',
-        'USER':'Captain',
-        'PASSWORD':'Captain',
-}}
+        'NAME': os.getenv('DB_NAME', 'image'),
+        'USER': os.getenv('DB_USER', 'Captain'),
+        'PASSWORD': os.getenv('DB_PASSWORD', 'Captain'),
+        'HOST': os.getenv('DB_HOST', 'localhost'),
+        'PORT': os.getenv('DB_PORT', '5432'),
+    }
+}
 
+DEBUG = os.getenv('DEBUG', 'False') == 'True'
 # Password validation
 # https://docs.djangoproject.com/en/5.1/ref/settings/#auth-password-validators
 
